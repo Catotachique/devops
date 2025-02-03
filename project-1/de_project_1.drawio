@@ -1,0 +1,141 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0" version="26.0.7">
+  <diagram name="Page-1" id="EIFSgWvohDpeKM7ZnNcV">
+    <mxGraphModel dx="1426" dy="781" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-26" value="" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="360" width="300" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-7" value="" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="414" y="160" width="340" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-17" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="439" y="180" width="290" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-1" value="" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;fillColor=#505050;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;outlineConnect=0;align=center;shape=mxgraph.office.concepts.on_premises;" vertex="1" parent="1">
+          <mxGeometry x="80" y="240" width="34" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-2" value="On Premise" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="67" y="310" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-4" value="" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/databases/Data_Factory.svg;" vertex="1" parent="1">
+          <mxGeometry x="248" y="172" width="68" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-5" value="" style="curved=1;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="130" y="278" as="sourcePoint" />
+            <mxPoint x="230" y="208" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="180" y="284" />
+              <mxPoint x="180" y="250" />
+              <mxPoint x="155" y="208" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-6" value="Azure Data Factory" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="252" y="252.5" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-8" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="332" y="210.5" as="sourcePoint" />
+            <mxPoint x="402" y="210.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-9" value="" style="image;sketch=0;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/mscae/Data_Lake.svg;" vertex="1" parent="1">
+          <mxGeometry x="385" y="91.37" width="78" height="102.63" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-10" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;gradientColor=none;strokeColor=light-dark(#aba23f, #ededed);" vertex="1" parent="1">
+          <mxGeometry x="463" y="193.75" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-11" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;strokeColor=light-dark(#b5bcbf, #ededed);" vertex="1" parent="1">
+          <mxGeometry x="555" y="193.75" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-12" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;strokeColor=light-dark(#f4cb01, #ededed);" vertex="1" parent="1">
+          <mxGeometry x="645" y="193.75" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-13" value="Bronze" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="463" y="256.25" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-14" value="Silver" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="555" y="256.25" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-15" value="Gold" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="645" y="256.25" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-16" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="773" y="208.5" as="sourcePoint" />
+            <mxPoint x="843" y="208.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-18" value="" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/analytics/Azure_Databricks.svg;" vertex="1" parent="1">
+          <mxGeometry x="720" y="309" width="62.8" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-19" value="Azure Databricks" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="721.4" y="377" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-20" value="Azure Data Lake" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="393.99999999999994" y="61.37" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-21" value="" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/databases/Azure_Synapse_Analytics.svg;" vertex="1" parent="1">
+          <mxGeometry x="866" y="175" width="60" height="69" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-22" value="Azure Synapse Analytics" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="866" y="252.5" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-23" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="942" y="209" as="sourcePoint" />
+            <mxPoint x="1012" y="209" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-24" value="" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/analytics/Power_BI_Embedded.svg;" vertex="1" parent="1">
+          <mxGeometry x="1031" y="172" width="51" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-25" value="Power BI" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1026.5" y="244" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-27" value="Security and Governance" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="250" y="360" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-28" value="" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/identity/Azure_AD_Identity_Protection.svg;" vertex="1" parent="1">
+          <mxGeometry x="285" y="394" width="68" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-29" value="Azure Active Directory" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="249" y="454" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-30" value="" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/security/Key_Vaults.svg;" vertex="1" parent="1">
+          <mxGeometry x="429" y="389" width="68" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-31" value="Key Vaults" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="397" y="454" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-32" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=light-dark(#258d3f, #ededed);" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="528" y="223" as="sourcePoint" />
+            <mxPoint x="553" y="223.25" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-36" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=light-dark(#258d3f, #ededed);" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="617" y="223" as="sourcePoint" />
+            <mxPoint x="642" y="223.25" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-37" value="Ingestion" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="334" y="214" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-38" value="Transformation" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="554" y="320" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-39" value="Load" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="780" y="210" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GoS-x4Dg7d_CEhqKWhpO-40" value="Show" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="950" y="208.75" width="60" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
