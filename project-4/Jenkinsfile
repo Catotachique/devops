@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking out code...' // Placeholder step
+            }
+        }
+        stage('Build') {
+            when {
+                branch 'main' // Or some other condition
+            }
+            steps {
+                bat 'echo "Building the project..."' // Use bat instead of sh
+            }
+        }
+        stage('Test') {
+            when {
+                branch 'develop' // Or some other condition
+            }
+            steps {
+                bat 'echo "Running tests..."' // Use bat instead of sh
+            }
+        }
+        stage('Deploy') {
+            steps {
+                bat 'echo "Deploying the project..."' // Use bat instead of sh
+            }
+        }
+    }
+}

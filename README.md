@@ -1,6 +1,6 @@
 # Data engineering Projects
-Projects related to Data engineering.
+Projects related to DevSecOps.
 
-### Errors
-The error message indicates that you're trying to push a file (terraform-provider-azurerm_v4.16.0_x5.exe) that exceeds GitHub's 100 MB file size limit. Here’s how you can resolve this issue:
-git filter-branch -f --index-filter 'git rm --cached -r --ignore-unmatch .terraform/'
+### How to Add Git Credentials in Jenkins
+Dashboard > Manage Jenkins > Credentials > System > Global credentials (unrestricted) > Add Credentials
+Dashboard > Manage Jenkins > Security > Git Host Key Verification Configuration > Manually provided keys > Insert known_hosts
