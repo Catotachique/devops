@@ -4,25 +4,24 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Git checkout is usually automatic in a Pipeline job
-                // You might not need an explicit checkout step
                 // sh 'git clone <your_repo_url>'  // Only if automatic checkout fails
             }
         }
         stage('Build') {
             steps {
-                // Your build steps here (e.g., sh 'mvn clean install')
+                // Build steps (e.g., sh 'mvn clean install')
                 sh 'echo "Building the project..."' // Example
             }
         }
         stage('Test') {
             steps {
-                // Your test steps here (e.g., sh 'mvn test')
+                // Test steps (e.g., sh 'mvn test')
                 sh 'echo "Running tests..."' // Example
             }
         }
         stage('Deploy') {
             steps {
-                // Your deployment steps here
+                // Deployment steps
                 sh 'echo "Deploying the project..."' // Example
             }
         }
