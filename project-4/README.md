@@ -1,25 +1,26 @@
 # Go to local folder
-mkdir project-4
+`mkdir project-4`
 
 # Build container
-docker build -t user-service ./backend/user-service
+`docker build -t user-service ./backend/user-service`
 
 # Run container
-docker run -d -p 8000:8000 --name user-service user-service
+`docker run -d -p 8000:8000 --name user-service user-service`
 
 ### Test in Browser or Postman
 👉 http://localhost:8000/
 
 ### To stop the running container
-docker stop user-service
+`docker stop user-service`
 
 ### To start it again
-docker start user-service
+`docker start user-service`
 
 ### To remove it completely
-docker rm -f user-service
+`docker rm -f user-service`
 
 ### Folder Structure
+<pre>
 project-4/
 │── backend/
 │   ├── user-service/
@@ -35,7 +36,7 @@ project-4/
 │── api-gateway/
 │   ├── kong.yml
 │── docker-compose.yml
-
+</pre>
 
 ## Installation
 ### Install jenkins in Kubernetes with Helm
