@@ -8,12 +8,18 @@ pipeline {
             }
         }
         stage('Build') {
+            when {
+                branch 'main' // Or some other condition
+            }
             steps {
                 // Build steps (e.g., sh 'mvn clean install')
                 sh 'echo "Building the project..."' // Example
             }
         }
         stage('Test') {
+            when {
+                branch 'develop' // Or some other condition
+            }
             steps {
                 // Test steps (e.g., sh 'mvn test')
                 sh 'echo "Running tests..."' // Example
