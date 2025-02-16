@@ -3,8 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Git checkout is usually automatic in a Pipeline job
-                // sh 'git clone <your_repo_url>'  // Only if automatic checkout fails
+                echo 'Checking out code...' // Placeholder step
             }
         }
         stage('Build') {
@@ -12,7 +11,6 @@ pipeline {
                 branch 'main' // Or some other condition
             }
             steps {
-                // Build steps (e.g., sh 'mvn clean install')
                 sh 'echo "Building the project..."' // Example
             }
         }
@@ -21,20 +19,13 @@ pipeline {
                 branch 'develop' // Or some other condition
             }
             steps {
-                // Test steps (e.g., sh 'mvn test')
                 sh 'echo "Running tests..."' // Example
             }
         }
         stage('Deploy') {
             steps {
-                // Deployment steps
                 sh 'echo "Deploying the project..."' // Example
             }
-        }
-    }
-    post {
-        always {
-            echo 'Pipeline completed.'
         }
     }
 }
