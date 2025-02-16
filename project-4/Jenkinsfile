@@ -11,7 +11,7 @@ pipeline {
                 branch 'main' // Or some other condition
             }
             steps {
-                bat 'echo "Building the project..."' // Use bat instead of sh
+                bat 'echo "Building the project-4..."' // Use bat instead of sh
             }
         }
         stage('Test') {
@@ -24,7 +24,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                bat 'echo "Deploying the project..."' // Use bat instead of sh
+                bat 'echo "Deploying the project-4..."' // Use bat instead of sh
             }
         }
     }

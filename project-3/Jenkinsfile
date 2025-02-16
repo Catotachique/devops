@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Checking out code...' // Placeholder step
+                echo 'Checking out code from project-3...' // Placeholder step
             }
         }
         stage('Build') {
@@ -11,7 +11,7 @@ pipeline {
                 branch 'main' // Or some other condition
             }
             steps {
-                bat 'echo "Building the project..."' // Use bat instead of sh
+                bat 'echo "Building the project-3..."' // Use bat instead of sh
             }
         }
         stage('Test') {
@@ -19,12 +19,12 @@ pipeline {
                 branch 'develop' // Or some other condition
             }
             steps {
-                bat 'echo "Running tests..."' // Use bat instead of sh
+                bat 'echo "Running tests from project-3..."' // Use bat instead of sh
             }
         }
         stage('Deploy') {
             steps {
-                bat 'echo "Deploying the project..."' // Use bat instead of sh
+                bat 'echo "Deploying the project-3..."' // Use bat instead of sh
             }
         }
     }
