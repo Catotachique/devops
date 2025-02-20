@@ -65,13 +65,24 @@ Password: bvbZpLBwhVm4kGvlvYKMtM
 ### Uninstall jenkins in Kubernetes with Helm
 helm uninstall jenkins -n jenkins
 kubectl delete namespace jenkins
-kubectl get pv 
-kubectl delete pv <pv-name> 
+kubectl get pv
+kubectl delete pv <pv-name>
 helm repo remove jenkins
 helm repo update
 
-kubectl get pods -n jenkins  
-kubectl get svc -n jenkins   
-kubectl get deployments -n jenkins  
-kubectl get pv 
-helm list -n jenkins
+kubectl get pods -n jenkins
+kubectl get svc -n jenkins
+kubectl get deployments -n jenkins
+kubectl get pv
+helm list -n
+
+### Microservice
+docker build -t user-service:user-service .
+
+##### Running the container
+docker run -d -p 8081:8081 user-service:user-
+
+
+docker stop Container ID
+docker rm Container ID
+
