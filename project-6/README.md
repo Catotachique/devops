@@ -1,7 +1,32 @@
 # Studying to CKA
+<li>
+Prerequisites:
+CPUs - 2
+Memory - 2.5MB
+Disk: 25 GB
+</li>
 
-`kind create cluster --image kindest/node:v1.30.6@sha256:28b7cbb993dfe093c76641a0c95807637213c9109b761f1d422c2400e22b8e87`
+## Control Plane
+`sudo apt-get update`
+`sudo apt-get install -y apt-transport-https ca-certificates curl`
+`curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -`
+`echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list`
+`sudo apt-get update`
 
-`kind get clusters`
+`sudo apt-get install -y kubeadm`
+`sudo apt-get install -y kubelet`
+`sudo apt-get install -y kubectl`
 
-`kubectl cluster-info --context kind-cka-cluster1`
+`sudo kubeadm reset -f`
+`sudo kubeadm init --ignore-preflight-errors=NumCPU`
+
+## Worker Node
+`sudo apt-get update`
+`sudo apt-get install -y apt-transport-https ca-certificates curl`
+`curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -`
+`echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list`
+`sudo apt-get update`
+
+`sudo apt-get install -y kubeadm`
+`sudo apt-get install -y kubelet`
+`sudo apt-get install -y kubectl`
