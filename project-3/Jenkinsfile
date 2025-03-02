@@ -1,9 +1,10 @@
 pipeline {
-    agent any
+    agent { label "linux" }
     stages {
         stage('Checkout') {
             steps {
                 echo 'Checking out code from project-3...' // Placeholder step
+                bat ''' aws --version'''
             }
         }
         stage('Build') {
@@ -12,6 +13,7 @@ pipeline {
             }
             steps {
                 bat 'echo "Building the project-3..."' // Use bat instead of sh
+                bat ''' aws --version'''
             }
         }
         stage('Test') {
