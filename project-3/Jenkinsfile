@@ -6,6 +6,7 @@ pipeline {
                 echo 'Checking out code from project-3...' // Placeholder step
                 bat '''
                 aws --version
+                aws sts get-caller-identity
                 aws s3 ls
                 aws ec2 describe-instances
                 '''
@@ -17,7 +18,10 @@ pipeline {
             }
             steps {
                 bat 'echo "Building the project-3..."' // Use bat instead of sh
-                bat 'aws --version'
+                bat '''
+                aws --version
+                aws sts get-caller-identity
+                '''
             }
         }
         stage('Test') {
