@@ -4,7 +4,11 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Checking out code from project-3...' // Placeholder step
-                bat 'aws --version'
+                bat '''
+                aws --version
+                aws s3 ls
+                aws ec2 describe-instances
+                '''
             }
         }
         stage('Build') {
