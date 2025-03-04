@@ -48,11 +48,9 @@ Let's create three:
 ```
 mkdir c:\temp\vms\linux-0\
 mkdir c:\temp\vms\linux-1\
-mkdir c:\temp\vms\linux-2\
 
 New-VHD -Path c:\temp\vms\linux-0\linux-0.vhdx -SizeBytes 25GB
 New-VHD -Path c:\temp\vms\linux-1\linux-1.vhdx -SizeBytes 25GB
-New-VHD -Path c:\temp\vms\linux-2\linux-2.vhdx -SizeBytes 25GB
 ```
 
 ```
@@ -64,6 +62,8 @@ New-VM `
 -VHDPath "c:\temp\vms\linux-0\linux-0.vhdx" `
 -Path "c:\temp\vms\linux-0\"
 
+Set-VMProcessor -VMName "linux-0" -Count 2
+
 New-VM `
 -Name "linux-1" `
 -Generation 1 `
@@ -72,14 +72,7 @@ New-VM `
 -VHDPath "c:\temp\vms\linux-1\linux-1.vhdx" `
 -Path "c:\temp\vms\linux-1\"
 
-New-VM `
--Name "linux-2" `
--Generation 1 `
--MemoryStartupBytes 2596MB `
--SwitchName "virtual-network" `
--VHDPath "c:\temp\vms\linux-2\linux-2.vhdx" `
--Path "c:\temp\vms\linux-2\"
-
+Set-VMProcessor -VMName "linux-1" -Count 2
 ```
 
 Setup a DVD drive that holds the `iso` file for Ubuntu Server
@@ -87,7 +80,6 @@ Setup a DVD drive that holds the `iso` file for Ubuntu Server
 ```
 Set-VMDvdDrive -VMName "linux-0" -ControllerNumber 1 -Path "C:\temp\ubuntu-24.04.2-live-server-amd64.iso"
 Set-VMDvdDrive -VMName "linux-1" -ControllerNumber 1 -Path "C:\temp\ubuntu-24.04.2-live-server-amd64.iso"
-Set-VMDvdDrive -VMName "linux-2" -ControllerNumber 1 -Path "C:\temp\ubuntu-24.04.2-live-server-amd64.iso"
 ```
 
 Start our VM's
@@ -95,7 +87,6 @@ Start our VM's
 ```
 Start-VM -Name "linux-0"
 Start-VM -Name "linux-1"
-Start-VM -Name "linux-2"
 ```
 
 Now we can open up Hyper-v Manager and see our infrastructure. </br>
