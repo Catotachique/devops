@@ -45,16 +45,17 @@ New-VMSwitch -Name "virtual-network" -SwitchType Internal -Notes "internal virtu
 ```
 
 # Hyper-V : Create our machines
-
 We firstly need harddrives for every VM. </br>
 Let's create three:
 
 ```
 mkdir c:\temp\vms\linux-0\
 mkdir c:\temp\vms\linux-1\
+mkdir c:\temp\vms\proxmox\
 
 New-VHD -Path c:\temp\vms\linux-0\linux-0.vhdx -SizeBytes 25GB
 New-VHD -Path c:\temp\vms\linux-1\linux-1.vhdx -SizeBytes 25GB
+New-VHD -Path c:\temp\vms\proxmox\proxmox.vhdx -SizeBytes 25GB
 ```
 
 ```
@@ -77,6 +78,18 @@ New-VM `
 -Path "c:\temp\vms\linux-1\"
 
 Set-VMProcessor -VMName "linux-1" -Count 2
+
+New-VM `
+-Name "proxmox" `
+-Generation 1 `
+-MemoryStartupBytes 2596MB `
+-SwitchName "LAN" `
+-VHDPath "c:\temp\vms\proxmox\proxmox.vhdx" `
+-Path "c:\temp\vms\proxmox\"
+
+Set-VMProcessor -VMName "proxmox" -Count 2
+Set-VMProcessor -VMName "proxmox" -ExposeVirtualizationExtensions $True
+Set-VMNetworkAdapter -VMName "proxmox" -MacAddressSpoofing On
 ```
 
 Setup a DVD drive that holds the `iso` file for Ubuntu Server
@@ -84,6 +97,7 @@ Setup a DVD drive that holds the `iso` file for Ubuntu Server
 ```
 Set-VMDvdDrive -VMName "linux-0" -ControllerNumber 1 -Path "C:\temp\ubuntu-24.04.2-live-server-amd64.iso"
 Set-VMDvdDrive -VMName "linux-1" -ControllerNumber 1 -Path "C:\temp\ubuntu-24.04.2-live-server-amd64.iso"
+Set-VMDvdDrive -VMName "proxmox" -ControllerNumber 1 -Path "C:\temp\proxmox-ve_8.3-1.iso"
 ```
 
 Start our VM's
@@ -91,6 +105,7 @@ Start our VM's
 ```
 Start-VM -Name "linux-0"
 Start-VM -Name "linux-1"
+Start-VM -Name "proxmox"
 ```
 
 Now we can open up Hyper-v Manager and see our infrastructure. </br>
