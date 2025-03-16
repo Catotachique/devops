@@ -45,39 +45,39 @@ New-VMSwitch -Name "virtual-network" -SwitchType Internal -Notes "internal virtu
 ```
 
 # Hyper-V : Create our machines
-We firstly need harddrives for every VM. </br>
-Let's create three:
+# We firstly need harddrives for every VM. </br>
+# Let's create three:
 
 ```
-mkdir c:\temp\vms\linux-0\
-mkdir c:\temp\vms\linux-1\
+mkdir c:\temp\vms\control-plane\
+mkdir c:\temp\vms\worker-node\
 mkdir c:\temp\vms\proxmox\
 
-New-VHD -Path c:\temp\vms\linux-0\linux-0.vhdx -SizeBytes 25GB
-New-VHD -Path c:\temp\vms\linux-1\linux-1.vhdx -SizeBytes 25GB
+New-VHD -Path c:\temp\vms\control-plane\control-plane.vhdx -SizeBytes 25GB
+New-VHD -Path c:\temp\vms\worker-node\worker-node.vhdx -SizeBytes 25GB
 New-VHD -Path c:\temp\vms\proxmox\proxmox.vhdx -SizeBytes 25GB
 ```
 
 ```
 New-VM `
--Name "linux-0" `
+-Name "control-plane" `
 -Generation 1 `
 -MemoryStartupBytes 2596MB `
 -SwitchName "virtual-network" `
--VHDPath "c:\temp\vms\linux-0\linux-0.vhdx" `
--Path "c:\temp\vms\linux-0\"
+-VHDPath "c:\temp\vms\control-plane\control-plane.vhdx" `
+-Path "c:\temp\vms\control-plane\"
 
-Set-VMProcessor -VMName "linux-0" -Count 2
+Set-VMProcessor -VMName "control-plane" -Count 2
 
 New-VM `
--Name "linux-1" `
+-Name "worker-node" `
 -Generation 1 `
 -MemoryStartupBytes 2596MB `
 -SwitchName "virtual-network" `
--VHDPath "c:\temp\vms\linux-1\linux-1.vhdx" `
--Path "c:\temp\vms\linux-1\"
+-VHDPath "c:\temp\vms\worker-node\worker-node.vhdx" `
+-Path "c:\temp\vms\worker-node\"
 
-Set-VMProcessor -VMName "linux-1" -Count 2
+Set-VMProcessor -VMName "worker-node" -Count 2
 
 New-VM `
 -Name "proxmox" `
@@ -92,21 +92,26 @@ Set-VMProcessor -VMName "proxmox" -ExposeVirtualizationExtensions $True
 Set-VMNetworkAdapter -VMName "proxmox" -MacAddressSpoofing On
 ```
 
-Setup a DVD drive that holds the `iso` file for Ubuntu Server
+# Setup a DVD drive that holds the `iso` file for Ubuntu Server
 
 ```
-Set-VMDvdDrive -VMName "linux-0" -ControllerNumber 1 -Path "C:\temp\ubuntu-24.04.2-live-server-amd64.iso"
-Set-VMDvdDrive -VMName "linux-1" -ControllerNumber 1 -Path "C:\temp\ubuntu-24.04.2-live-server-amd64.iso"
+Set-VMDvdDrive -VMName "control-plane" -ControllerNumber 1 -Path "C:\temp\ubuntu-24.04.2-live-server-amd64.iso"
+Set-VMDvdDrive -VMName "worker-node" -ControllerNumber 1 -Path "C:\temp\ubuntu-24.04.2-live-server-amd64.iso"
 Set-VMDvdDrive -VMName "proxmox" -ControllerNumber 1 -Path "C:\temp\proxmox-ve_8.3-1.iso"
 ```
 
-Start our VM's
+# Start our VM's
 
 ```
-Start-VM -Name "linux-0"
-Start-VM -Name "linux-1"
+Start-VM -Name "control-plane"
+Start-VM -Name "worker-node"
 Start-VM -Name "proxmox"
 ```
+
+pve.proxmox.local
+
+# After create VM and open the VM
+`sudo dhclient`
 
 Now we can open up Hyper-v Manager and see our infrastructure. </br>
 In this video we'll connect to each server, and run through the initial ubuntu setup. </br>
@@ -115,26 +120,60 @@ This is ok, just shut down the server and start it up again. </br>
 
 ## Control Plane
 `sudo apt-get update`
-`sudo apt-get install -y apt-transport-https ca-certificates curl`
-`curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -`
-`echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list`
+`sudo apt-get install -y apt-transport-https ca-certificates software-properties-common curl openssh-server net-tools docker-ce docker-ce-cli containerd.io docker.io etcd-server`
+`systemctl enable ssh`
+`systemctl status ssh`
+
+## Install the Docker
+`curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg`
+`echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null`
+
 `sudo apt-get update`
+
+Add Your User to the Docker Group
+`sudo usermod -aG docker $USER`
+`newgrp docker`
 
 `sudo swapoff -a`
 `sudo nano /etc/fstab`
 
-Change it to:
+Change the file to:
 `#/swapfile none swap sw 0 0`
 `free -h`
 
-`sudo apt install -y docker.io`
-`sudo snap install kubeadm --classic`
-`sudo snap install kubelet --classic`
-`sudo snap install kubectl --classic`
+Add the Kubernetes Repository
+`curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo tee /etc/apt/keyrings/kubernetes-apt-keyring.asc`
+`echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.asc] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list`
+
+Update the Package List
+`sudo apt update`
+
+Install Kubelet, Kubeadm, and Kubectl
+`sudo apt install -y docker.io kubelet kubeadm kubectl`
+
+Hold the packages to prevent accidental updates
+`sudo apt-mark hold kubelet kubeadm kubectl`
+
+Enable & Start Kubelet
+`sudo systemctl daemon-reload`
+`sudo systemctl enable --now kubelet`
+
+Verify Kubelet Installation
+`kubelet --version`
+
+Check service status
+`sudo systemctl status kubelet`
 
 `sudo kubeadm reset -f`
-`sudo kubeadm init --ignore-preflight-errors=NumCPU`
+
+`sudo kubeadm init`
+or
 `sudo kubeadm init --ignore-preflight-errors=all`
+
+Check the ports
+`netstat -plnt`
+`pkill kubelet`
+
 
 ## Worker Node
 `sudo apt-get update`

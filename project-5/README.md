@@ -41,54 +41,52 @@ New-VMSwitch -Name "virtual-network" -SwitchType Internal -Notes "internal virtu
 ```
 
 # Hyper-V : Create our machines
-
-We firstly need harddrives for every VM. </br>
-Let's create three:
+# We firstly need harddrives for every VM. </br>
+# Let's create three:
 
 ```
-mkdir c:\temp\vms\linux-0\
-mkdir c:\temp\vms\linux-1\
+mkdir c:\temp\vms\control-plane\
+mkdir c:\temp\vms\worker-node\
 
-New-VHD -Path c:\temp\vms\linux-0\linux-0.vhdx -SizeBytes 25GB
-New-VHD -Path c:\temp\vms\linux-1\linux-1.vhdx -SizeBytes 25GB
+New-VHD -Path c:\temp\vms\control-plane\control-plane.vhdx -SizeBytes 40GB
+New-VHD -Path c:\temp\vms\worker-node\worker-node.vhdx -SizeBytes 40GB
 ```
 
 ```
 New-VM `
--Name "linux-0" `
+-Name "control-plane" `
 -Generation 1 `
--MemoryStartupBytes 2596MB `
--SwitchName "virtual-network" `
--VHDPath "c:\temp\vms\linux-0\linux-0.vhdx" `
--Path "c:\temp\vms\linux-0\"
+-MemoryStartupBytes 2796MB `
+-SwitchName "LAN" `
+-VHDPath "c:\temp\vms\control-plane\control-plane.vhdx" `
+-Path "c:\temp\vms\control-plane\"
 
-Set-VMProcessor -VMName "linux-0" -Count 2
+Set-VMProcessor -VMName "control-plane" -Count 2
 
 New-VM `
--Name "linux-1" `
+-Name "worker-node" `
 -Generation 1 `
--MemoryStartupBytes 2596MB `
--SwitchName "virtual-network" `
--VHDPath "c:\temp\vms\linux-1\linux-1.vhdx" `
--Path "c:\temp\vms\linux-1\"
+-MemoryStartupBytes 2796MB `
+-SwitchName "LAN" `
+-VHDPath "c:\temp\vms\worker-node\worker-node.vhdx" `
+-Path "c:\temp\vms\worker-node\"
 
-Set-VMProcessor -VMName "linux-1" -Count 2
+Set-VMProcessor -VMName "worker-node" -Count 2
 ```
 
-Setup a DVD drive that holds the `iso` file for Ubuntu Server
+# Setup a DVD drive that holds the `iso` file for Ubuntu Server
 
 ```
-Set-VMDvdDrive -VMName "linux-0" -ControllerNumber 1 -Path "C:\temp\ubuntu-24.04.2-live-server-amd64.iso"
-Set-VMDvdDrive -VMName "linux-1" -ControllerNumber 1 -Path "C:\temp\ubuntu-24.04.2-live-server-amd64.iso"
+Set-VMDvdDrive -VMName "control-plane" -ControllerNumber 1 -Path "C:\temp\ubuntu-24.04.2-live-server-amd64.iso"
+Set-VMDvdDrive -VMName "worker-node" -ControllerNumber 1 -Path "C:\temp\ubuntu-24.04.2-live-server-amd64.iso"
 ```
 
-Start our VM's
+# Start our VM's
 
 ```
-Start-VM -Name "linux-0"
-Start-VM -Name "linux-1"
+Start-VM -Name "control-plane"
+Start-VM -Name "worker-node"
 ```
-
 Now we can open up Hyper-v Manager and see our infrastructure. </br>
 In this video we'll connect to each server, and run through the initial ubuntu setup. </br>
 Once finished, select the option to reboot and once it starts, you will notice an `unmount` error on CD-Rom. </br>
@@ -104,34 +102,23 @@ Let's temporarily turn on SSH on each server:
 
 ```
 sudo apt update
-sudo apt install -y nano net-tools openssh-server
+sudo apt-get install -y apt-transport-https ca-certificates software-properties-common curl openssh-server net-tools docker-ce docker-ce-cli containerd.io docker.io etcd-server
 sudo systemctl enable ssh
 sudo ufw allow ssh
 sudo systemctl start ssh
 ```
 
-Record the IP address of each VM so we can SSH to it:
-
-```
-sudo ifconfig
-# record eth0
-linux-0 IP=192.168.0.16
-linux-1 IP=192.168.0.17
-linux-2 IP=192.168.0.18
-```
-
 In new Powershell windows, let's SSH to our VMs
 
 ```
-ssh linux-0@192.168.0.16
-ssh linux-1@192.168.0.17
-ssh linux-2@192.168.0.18
+ssh control-plane@192.168.134.121
+ssh worker-node@192.168.134.53
 ```
 
 # Setup Docker
 
-It is required that every machine that needs to join our cluster, has docker running on it. </br>
-Firstly, rancher will use docker to run it's agent as well as bootstrap the cluster.</br>
+It is required that every machine that needs to join our cluster, has docker running on it.</br>
+Firstly, Rancher will use docker to run it's agent as well as bootstrap the cluster.</br>
 
 Install docker on each VM:
 ```
@@ -140,85 +127,8 @@ sudo usermod -aG docker $(whoami)
 sudo service docker start
 ```
 
-# Running Rancher in Docker
+## To install RKE2 via install Tarball
 
-So Rancher can be [deployed](https://rancher.com/docs/rancher/v2.5/en/quick-start-guide/deployment/) almost anywhere. </br>
-We can run it in Kubernetes on-prem or the cloud.  </br>
-
-Now because we want Rancher to manage kubernetes clusters, we dont want it running in the clusters we are managing. </br>
-So I would like to keep my Rancher server outside and separate from my Kubernetes clusters.</br>
-
-So let's setup a single server with [docker](https://rancher.com/docs/rancher/v2.5/en/quick-start-guide/deployment/quickstart-manual-setup/)
-
-## Persist data
-
-We will want to persist ranchers data across reboots. </br>
-Rancher stores its data under `/var/lib/rancher` </br> 
-
-In this repo, let's create a space to persist data:
-
-```
-cd kubernetes/rancher
-mkdir volume
-
-```
-
-## Run Rancher
-
-```
-docker run -d --name rancher-server  -v ${PWD}/volume:/var/lib/rancher --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher
-```
-
-## Unlock Rancher
-
-Once its up and running we can extract the Rancher initial boostrap password from the logs 
-
-```
-docker logs rancher-server > rancher.log
-```
-
-## Get Rancher IP
-
-It's important that our servers can reach the Rancher server. </br>
-As all the VMs and my machine are on the same network, we can use my machine IP as the server IP so the VM's can reach it. </br>
-let's grab the IP:
-
-```
-ipconfig
-```
-
-We can now access Rancher on [localhost](https://localhost)
-
-## Deploy Sample Workloads
-
-To deploy some sample basic workloads, let's get the `kubeconfig` for our cluster </br>
-
-Set kubeconfig:
-
-```
-$ENV:KUBECONFIG="<path-to-kubeconfig>"
-```
-
-Deploy 2 pods, and a service:
-
-```
-kubectl create ns marcel
-kubectl -n marcel apply -f .\kubernetes\configmaps\configmap.yaml
-kubectl -n marcel apply -f .\kubernetes\secrets\secret.yaml
-kubectl -n marcel apply -f .\kubernetes\deployments\deployment.yaml
-kubectl -n marcel apply -f .\kubernetes\services\service.yaml
-```
-
-One caveat is because we are not a cloud provider, Kubernetes does not support our service `type=LoadBalancer`. </br>
-For that, we need something like `metallb`. </br>
-However - we can `port-forward`
-
-```
-kubectl -n marcel get svc 
-NAME              TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
-example-service   LoadBalancer   10.43.235.240   <pending>     80:31310/TCP   13s
-
-kubectl -n marcel port-forward svc/example-service 81:80
-```
-
-We can access our example-app on port 81
+curl -sfL https://get.rke2.io --output install.sh
+chmod +x install.sh
+INSTALL_RKE2_CHANNEL=latest ./install.sh
