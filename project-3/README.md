@@ -5,7 +5,7 @@
 
 ### Config Github
 git config --global user.email "you@example.com"
-git config --global user.name "Your Name"
+git config --global user.name "felipedds"
 
 ### Set up AWS_PROFILE
 1. Create or update your AWS config and credentials
