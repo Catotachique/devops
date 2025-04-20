@@ -4,8 +4,8 @@
 `aws iam list-users`
 
 ### Config Github
-git config --global user.email "you@example.com"
-git config --global user.name "felipedds"
+`git config --global user.email "you@example.com"`
+`git config --global user.name "felipedds"`
 
 ### Set up AWS_PROFILE
 1. Create or update your AWS config and credentials
@@ -32,7 +32,7 @@ If you've already run aws configure, you can find them in ~/.aws/credentials und
 
 ### To use a profile for multiple commands set the AWS_PROFILE.
 `export AWS_PROFILE=[NAME]`
-`export AWS_PROFILE=terraform-staging`
+`export AWS_PROFILE=admin`
 
 ### Returns details about the IAM user or role whose credentials are used to call the operation.
 `aws sts get-caller-identity`
