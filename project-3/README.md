@@ -7,6 +7,18 @@
 `git config --global user.email "you@example.com"`
 `git config --global user.name "felipedds"`
 
+`ls ~/.ssh/id_*.pub`
+
+#### Generate a new SSH key
+`ssh-keygen -t ed25519 -C "felipedds@yahoo.com"`
+
+#### Start the SSH agent and add the key
+`eval "$(ssh-agent -s)"`
+`ssh-add ~/.ssh/id_ed25519`
+
+#### Copy the public key
+`cat ~/.ssh/id_ed25519.pub`
+
 ### Set up AWS_PROFILE
 1. Create or update your AWS config and credentials
 
