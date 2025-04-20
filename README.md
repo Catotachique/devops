@@ -1,4 +1,4 @@
-# Data engineering Projects
+# DevSecOps Projects
 Projects related to DevSecOps.
 
 ## Repository
