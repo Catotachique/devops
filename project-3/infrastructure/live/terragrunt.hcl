@@ -51,7 +51,8 @@ provider "aws" {
   region = "${local.aws_region}"
 
   # only these aws account ids may be operated on by this template
-  allowed_account_ids = ["${local.account_id}"]
+  allowed_account_ids = ["${local.account_id}"
+]
 }
 EOF
 }
