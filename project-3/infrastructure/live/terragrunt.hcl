@@ -4,8 +4,6 @@ locals {
   region_vars  = read_terragrunt_config(find_in_parent_folders("region.hcl"))
 
   name_prefix         = local.common_vars.locals.name_prefix
-  organization_arn    = local.common_vars.locals.organization_arn
-  vpn_cidr            = local.common_vars.locals.vpn_cidr
   account_name        = local.account_vars.locals.account_name
   account_id          = local.account_vars.locals.aws_account_id
   default_region      = local.common_vars.locals.default_region
@@ -20,40 +18,40 @@ generate "provider" {
   path      = "provider.tf"
   if_exists = "overwrite_terragrunt"
   contents = <<EOF
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "4.33.0"
+  terraform {
+    required_providers {
+      aws = {
+        source  = "hashicorp/aws"
+        version = "4.33.0"
+      }
+
+      github = {
+        source  = "integrations/github"
+        version = " 4.28.0"
+      }
+
+      kubernetes = {
+        source  = "hashicorp/kubernetes"
+        version = "2.12.1"
+      }
+
+      tls = {
+        source  = "hashicorp/tls"
+        version = "3.4.0"
+      }
+
     }
 
-    github = {
-      source  = "integrations/github"
-      version = " 4.28.0"
-    }
-
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "2.12.1"
-    }
-
-    tls = {
-      source  = "hashicorp/tls"
-      version = "3.4.0"
-    }
-
+    required_version = "1.4.5"
   }
 
-  required_version = "1.4.5"
-}
+  provider "aws" {
+    region = "${local.aws_region}"
 
-provider "aws" {
-  region = "${local.aws_region}"
-
-  # only these aws account ids may be operated on by this template
-  allowed_account_ids = ["${local.account_id}"
-]
-}
+    # only these aws account ids may be operated on by this template
+    allowed_account_ids = ["${local.account_id}"
+  ]
+  }
 EOF
 }
 
