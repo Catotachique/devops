@@ -93,7 +93,8 @@ The code in this repo uses the following folder hierarchy:
 .
 ├── live                     # Actual infrastructure state
 │   ├── _envcommon           # Each resource in a region has a file here to DRY common configurations 
-│   │   └── ...
+│   │   ├── ...
+│   │   └──s3
 │   ├── common.hcl           # Common variables used in all accounts and regions
 │   ├── account              # Each AWS account has a folder at this level (production, development or staging)
 │   │   ├── _global          # Resources that doesn't depends of region (iam, route53, ...)
