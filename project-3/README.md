@@ -68,22 +68,21 @@ If you've already run aws configure, you can find them in ~/.aws/credentials und
 
 1. Install [Terraform](https://www.terraform.io/) version `1.2.5` and
    [Terragrunt](https://github.com/gruntwork-io/terragrunt) version `v0.38.4` or newer.
-1. Configure your AWS credentials using one of the supported [authentication
+2. Configure your AWS credentials using one of the supported [authentication
    mechanisms](https://www.terraform.io/docs/providers/aws/#authentication).
 
 
 ### Deploying a single module
-
 1. `cd` into the module's folder (e.g. `cd research/eu-west-1/network`).
-1. Run `terragrunt plan` to see the changes you're about to apply.
-1. If the plan looks good, run `terragrunt apply`.
+2. Run `terragrunt plan` to see the changes you're about to apply.
+3. If the plan looks good, run `terragrunt apply`.
 
 
 ### Deploying all modules in a region
 
 1. `cd` into the region folder (e.g. `cd research/eu-west-1`).
-1. Run `terragrunt plan-all` to see all the changes you're about to apply.
-1. If the plan looks good, run `terragrunt apply-all`.
+2. Run `terragrunt plan-all` to see all the changes you're about to apply.
+3. If the plan looks good, run `terragrunt apply-all`.
 
 ## How is the code in this repo organized?
 
@@ -123,7 +122,7 @@ To create your backend manually. For example, if you're using S3 as a backend, y
 Partition key: LockID <br>
 
 
-## To edit the infrastructure
+# Edit the infrastructure
 #### Steps:
 1. Always first do commit
 2. Apply the plan in terragrunt
