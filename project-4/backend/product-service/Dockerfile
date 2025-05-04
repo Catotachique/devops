@@ -6,9 +6,10 @@ WORKDIR /app
 
 # Copy app files
 COPY main.py /app/
+COPY requirements.txt /app/
 
 # Install dependencies
-RUN pip install --no-cache-dir fastapi uvicorn
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose port FastAPI will run on
 EXPOSE 3000
