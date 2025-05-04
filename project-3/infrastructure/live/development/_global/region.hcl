@@ -1,3 +1,4 @@
+# Set common variables for the region. This is automatically pulled in in the root terragrunt.hcl configuration to
 locals {
     aws_region = read_terragrunt_config(find_in_parent_folders("common.hcl")).locals.default_region
     tgw_id = ""

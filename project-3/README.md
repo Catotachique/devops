@@ -65,27 +65,31 @@ If you've already run aws configure, you can find them in ~/.aws/credentials und
 # How do you deploy the infrastructure?
 
 ### Pre-requisites
-
 1. Install [Terraform](https://www.terraform.io/) version `1.2.5` and
    [Terragrunt](https://github.com/gruntwork-io/terragrunt) version `v0.38.4` or newer.
 2. Configure your AWS credentials using one of the supported [authentication
    mechanisms](https://www.terraform.io/docs/providers/aws/#authentication).
 
+## Terragrunt create your State Backend(State Locking)
+For a few popular backend types (S3 and GCS), if you're using the remote_state block, Terragrunt can automatically create the backend for you. That is, when you run terragrunt init or terragrunt apply, Terragrunt will check if the backend exists, and if it doesn't, it'll make API calls to set up the backend automatically / transparently, following best practices. <br>
+Links:
+https://github.com/orgs/gruntwork-io/discussions/769
+https://www.youtube.com/watch?v=p7oB_OsWNAU
+
+### Initialize backend resources for storing the Terraform state remotely (in this case, an S3 bucket and a table in DynamoDB)
+`terragrunt init --backend-bootstrap`
 
 ### Deploying a single module
 1. `cd` into the module's folder (e.g. `cd research/eu-west-1/network`).
 2. Run `terragrunt plan` to see the changes you're about to apply.
 3. If the plan looks good, run `terragrunt apply`.
 
-
 ### Deploying all modules in a region
-
 1. `cd` into the region folder (e.g. `cd research/eu-west-1`).
 2. Run `terragrunt plan-all` to see all the changes you're about to apply.
 3. If the plan looks good, run `terragrunt apply-all`.
 
 ## How is the code in this repo organized?
-
 The code in this repo uses the following folder hierarchy:
 
 ```
@@ -108,19 +112,6 @@ The code in this repo uses the following folder hierarchy:
 └── modules                  # Reusable modules (rds, iam, ec2, ....)
     └── ...
 ```
-
-
-# State Backend(State Locking) create the backend manually (ClickOps)
-To create your backend manually. For example, if you're using S3 as a backend, you'd login to the AWS Console, and click around for a while to create an S3 bucket and DynamoDB table. <br>
-
-### Create a S3 Bucket, with the name: 
-`"${local.name_prefix}-${local.account_name}-${local.aws_region}-terraform-state"` # EX:. catotachique-development-eu-west-1-terraform-state <br>
-
-### Create a Table in DynamoDB, with the name: 
-`terraform-state-locking`
-
-Partition key: LockID <br>
-
 
 # Edit the infrastructure
 #### Steps:
@@ -196,6 +187,3 @@ Partition key: LockID <br>
 #### Import resources that already exist in AWS(resources that are created from AWS not Terraform)
 terragrunt import '[REFERENCE COMPLETE]' [NAME]
 `terragrunt import 'aws_s3_bucket_versioning.this["staging-bi-clever-output"]' staging-bi-clever-output`
-
-
-
