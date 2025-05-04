@@ -2,7 +2,7 @@
 The common variables for each environment are defined here. */
 
 terraform {
-  source = "${path_relative_from_include()}/../../../modules//s3"
+  source = "${path_relative_from_include()}/../../../../project-3/infrastructure/modules/s3"
 }
 
 # Locals are named constants that are reusable within the configuration.

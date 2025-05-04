@@ -59,9 +59,6 @@ If you've already run aws configure, you can find them in ~/.aws/credentials und
 ### Returns details about the IAM user or role whose credentials are used to call the operation.
 `aws sts get-caller-identity`
 
-#### Force unlock a Terraform state lock with the given lock ID
-`terragrunt force-unlock 5d516cd4-571a-4cab-786b-120723bd3853`
-
 # How do you deploy the infrastructure?
 
 ### Pre-requisites
@@ -113,7 +110,20 @@ The code in this repo uses the following folder hierarchy:
     └── ...
 ```
 
-# Edit the infrastructure
+## First Commit
+### Verify if repository is up to date
+`git checkout master`
+`git pull origin master`
+
+### Create a branch
+`git checkout -b <branch>`  -> Merge `<branch>` into the current branch.
+`git checkout -b terraform-files`
+
+### Verify if you stay at correct branch
+`git status`
+
+
+# Change the Infrastructure code
 #### Steps:
 1. Always first do commit
 2. Apply the plan in terragrunt
@@ -132,21 +142,6 @@ The code in this repo uses the following folder hierarchy:
 ### Returns details about the IAM user or role whose credentials are used to call the operation.
 `aws sts get-caller-identity`
 
-
-## First Commit
-### Verify if repository is up to date
-`git checkout master`
-`git pull origin master`
-
-### Create a branch
-`git checkout -b <branch>`  -> Merge `<branch>` into the current branch.
-`git checkout -b terraform-files`
-
-### Verify if you stay at correct branch
-`git status`
-
-
-### Change the Infrastructure code
 #### Add the files to push
 `git add .`
 
@@ -187,3 +182,8 @@ The code in this repo uses the following folder hierarchy:
 #### Import resources that already exist in AWS(resources that are created from AWS not Terraform)
 terragrunt import '[REFERENCE COMPLETE]' [NAME]
 `terragrunt import 'aws_s3_bucket_versioning.this["staging-bi-clever-output"]' staging-bi-clever-output`
+
+
+
+#### Force unlock a Terraform state lock with the given lock ID
+`terragrunt force-unlock 5d516cd4-571a-4cab-786b-120723bd3853`
