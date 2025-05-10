@@ -146,3 +146,29 @@ resources:
 - gotk-sync.yaml
 
 ```
+
+### Insert the Token in your system
+`export GITHUB_TOKEN=uhp_lx37wYoJiHZ8nAxk4YqN6yoB2yLG91cOz9H`
+
+### Bootstrap the FLuxCD
+```
+flux bootstrap github \
+  --owner=felipedds \
+  --repository=cloud-native-1 \
+  --branch=main \
+  --path=infrastructure-k8s/clusters/template \
+  --token-auth
+  --personal
+```
+
+### Check the pods created after Bootstrap, to verify if the FluxCD was installed
+
+`kubectl get pods -n flux-system`
+
+```
+NAME                                       READY   STATUS    RESTARTS   AGE
+helm-controller-656f694f99-qmp65           1/1     Running   0          25m
+kustomize-controller-f6756756f-dvxfg       1/1     Running   0          25m
+notification-controller-848f84bccd-952fp   1/1     Running   0          25m
+source-controller-59b9b6567b-zjbr7         1/1     Running   0          25m
+```
