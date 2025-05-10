@@ -13,12 +13,11 @@ Jaeger for distributed tracing;
 <br>
 ✅ 1. Infrastructure Layer
 Cloud provider: AWS / GCP / Azure (or on-prem with kubeadm or k3s)
-
 Cluster provisioning:
 EKS / GKE / AKS (Managed Kubernetes)
 Or use Terraform for IaC
 
-<br>
+</br>
 🧠 2. Orchestration & Runtime
 Kubernetes: Container orchestration
 Docker: Used to containerize your applications
@@ -29,7 +28,7 @@ Helm: To package, version, and deploy apps as charts
 GitHub Actions:
 CI: Run tests, build Docker images, push to a registry
 CD: Push Helm chart updates to Git repo
-
+<br>
 ArgoCD:
 Watches Git repo (Helm charts or K8s manifests)
 Syncs to Kubernetes cluster automatically (GitOps model)
@@ -46,12 +45,12 @@ Integrates with Prometheus, Grafana, and Jaeger
 Logging:
 ELK Stack (Elasticsearch, Logstash, Kibana)
 Fluent Bit or Filebeat to ship logs to Elasticsearch
-
+<br>
 Monitoring:
 Prometheus: Collects metrics from apps and Istio
 Alertmanager: Sends alerts (Slack, email, etc.)
 Grafana: Visualizes Prometheus metrics
-
+<br>
 Tracing:
 Jaeger: Distributed tracing (integrates with Istio)
 
