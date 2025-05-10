@@ -69,3 +69,58 @@ ArgoCD detects chart change → syncs to cluster
 Istio routes traffic → app
 Logs/metrics/traces → ELK / Prometheus / Jaeger
 Grafana dashboards + Alertmanager notifications
+
+#### Project Folder Structure
+
+cloud-native-app/
+├── .github/
+│   └── workflows/
+│       └── deploy.yaml          	 # GitHub Actions workflow
+├── charts/
+│   └── catota-app/              	 # Helm chart for your app
+│       ├── Chart.yaml
+│       ├── values.yaml
+│       └── templates/
+│           ├── deployment.yaml
+│           ├── service.yaml
+│           ├── ingress.yaml
+│           └── virtualservice.yaml 	 # Istio VirtualService
+├── manifests/
+│   ├── argocd/
+│   │   └── app.yaml             	 # ArgoCD Application definition
+│   ├── istio/
+│   │   └── gateway.yaml         	 # Istio Gateway for external traffic
+│   └── observability/
+│       ├── prometheus.yaml      	 # Prometheus config (if needed)
+│       ├── grafana-dashboards/  	 # JSON dashboard definitions
+│       ├── jaeger.yaml
+│       └── fluentbit.yaml       	 # (optional) logging agent
+├── app/
+│   ├── Dockerfile               	 # Dockerfile for your app
+│   ├── main.py / index.js / ...	 # Your app code
+│   └── requirements.txt / package.json
+├── k8s/
+│   ├── base/                    	 # Base manifests if not using Helm
+│   └── overlays/dev/            	 # Kustomize overlays (optional)
+├── scripts/
+│   └── kind-setup.sh            	 # Script to create Kind cluster + registry
+├── README.md
+└── .env                         	 # Optional: environment variables
+<br>
+
+#### Create a cluster Kind
+I created a custom configuration file (e.g., cluster.yaml) to define specific cluster parameters, such as the number of nodes.
+Here's an example for creating a multi-node cluster:
+```
+# cluster.yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+  - role: worker
+```
+
+Then create the cluster with:
+`kind create cluster --config kind-config.yaml`
+
+
