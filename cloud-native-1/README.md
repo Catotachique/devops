@@ -1,16 +1,13 @@
 ## Cloud Native Project
 
-I'm looking to build a modern cloud-native system using<br>
-Kubernetes for orchestration; 
-Helm for package management;
-Istio for service mesh;
-Docker for containerization;
-ArgoCD for GitOps deploymen;
-GitHub Actions for CI/CD;
-ELK for log management;
-Prometheus and Alertmanager for monitoring and alerting;
-Grafana for visualization;
-Jaeger for distributed tracing;
+I'm looking to build a modern cloud-native system<br>
+Overview:<br>
+Local development with Kind <br>
+CI/CD automation with GitHub Actions <br>
+GitOps deployment via ArgoCD (apps) and optionally FluxCD (infra) <br>
+Observability with Prometheus, Alertmanager, Grafana, and Jaeger <br>
+Service Mesh with Istio <br>
+Centralized logging with the ELK stack <br>
 
 <br>
 ✅ 1. Infrastructure Layer
