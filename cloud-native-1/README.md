@@ -1,4 +1,4 @@
-I'm looking to build a modern cloud-native system using
+I'm looking to build a modern cloud-native system using<br>
 Kubernetes for orchestration; 
 Helm for package management;
 Istio for service mesh;
@@ -17,7 +17,7 @@ Cluster provisioning:
 EKS / GKE / AKS (Managed Kubernetes)
 Or use Terraform for IaC
 
-</br>
+<br>
 🧠 2. Orchestration & Runtime
 Kubernetes: Container orchestration
 Docker: Used to containerize your applications
