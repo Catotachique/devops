@@ -120,4 +120,29 @@ nodes:
 Then create the cluster with:
 `kind create cluster --config kind-config.yaml`
 
+### Install FluxCD
+`curl -s https://fluxcd.io/install.sh | sudo bash`
 
+### Create the folders to FluxCD and you config files
+```
+mkdir clusters
+cd clusters/
+mkdir template
+cd template/
+mkdir flux-system
+cd flux-system/
+touch gotk-components.yaml gotk-sync.yaml kustomization.yaml
+```
+
+### Edit the file kustomize.yaml
+`cd infrastructure-k8s/clusters/template/flux-system` <br>
+`nano kustomization.yaml`
+
+```                                                                        
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- gotk-components.yaml
+- gotk-sync.yaml
+
+```
