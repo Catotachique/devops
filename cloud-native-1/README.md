@@ -109,7 +109,7 @@ cloud-native-app/
 I created a custom configuration file (e.g., cluster.yaml) to define specific cluster parameters, such as the number of nodes.
 Here's an example for creating a multi-node cluster:
 ```
-# cluster.yaml
+// cluster.yaml
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
@@ -162,9 +162,9 @@ flux bootstrap github \
 ```
 
 ### Check the pods created after Bootstrap, to verify if the FluxCD was installed
-
 `kubectl get pods -n flux-system`
 
+##### The controllers that should be installed in the cluster
 ```
 NAME                                       READY   STATUS    RESTARTS   AGE
 helm-controller-656f694f99-qmp65           1/1     Running   0          25m
@@ -172,3 +172,54 @@ kustomize-controller-f6756756f-dvxfg       1/1     Running   0          25m
 notification-controller-848f84bccd-952fp   1/1     Running   0          25m
 source-controller-59b9b6567b-zjbr7         1/1     Running   0          25m
 ```
+
+### Check the secrets related with FluxCD
+`kubectl get secrets -n flux-system`
+
+### Decode the secret (if necessary)
+`kubectl get secret flux-system -n flux-system -o jsonpath='{.data.password}' | base64 -d`
+
+### Check the clusterrolebindings
+`kubectl get clusterrolebindings | grep flux`
+
+### Go the kustomize directory.
+`cd /home/ubuntu/Downloads/devops/cloud-native-1/infrastructure-k8s/clusters/template`
+
+### Create the podinfo-repo.yaml file.
+`nano podinfo-repo.yaml`
+
+### Add the following content:
+```
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+ name: podinfo
+ namespace: flux-system
+spec:
+ interval: 30s
+ ref:
+ branch: main
+ url: https://github.com/Catotachique/devops/tree/main/cloud-native-1
+```
+
+### Create the info-kustomization.yaml file.
+`nano info-kustomization.yaml`
+
+### Add the following content:
+```
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cloud-native-1
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  path: ./kustomize             
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: cloud-native-1
+  targetNamespace: default
+```
+
+
