@@ -222,4 +222,13 @@ spec:
   targetNamespace: default
 ```
 
+### Commit and push the changes to the remote repository
+```
+git add -A
+git commit -m "Adds the podinfo repo and kustomization"
+git push origin main
+```
+### Wait for the changes to get synced to the cluster
+`flux get kustomizations --watch`
+
 
